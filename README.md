@@ -1,6 +1,11 @@
 # SQL Exercises
 
-## Ranking Functions
+## Window Functions
+
+https://www.codecademy.com/resources/docs/sql/window-functions
+https://www.datacamp.com/cheat-sheet/sql-window-functions-cheat-sheet
+
+### Ranking Functions
 
 **ROW_NUMBER()** is useful for pagination (getting rows 1-10, 11-20, etc.), finding the first/last occurrence of something, or when you need unique sequential numbers.
 
@@ -9,7 +14,7 @@
 **DENSE_RANK()** is perfect for grading systems or classification tiers. For example, in a class grading system, if three students score 95%, they all get rank 1. If two students score 92%, they get rank 2 (not rank 4). This matches how real-world grading systems handle ties.
 
 
-## Window Frames
+### Window Frames
 
 **Moving Averages**: Perfect for smoothing out data fluctuations. For example, calculating a 7-day moving average of sales to spot trends while reducing daily noise. This is commonly used in stock market analysis and sales forecasting.
 
