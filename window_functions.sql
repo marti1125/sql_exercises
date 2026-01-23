@@ -236,3 +236,113 @@ SELECT
 FROM sale;
 
 
+-- Exercises
+
+select
+  book_title,
+  category,
+  price,
+  round(avg(price) over(partition by category),2) as category_avg
+from sale
+order by category asc, price desc
+
+
+select
+  title,
+  category,
+  copies_sold,
+  first_value(title) over(partition by category order by copies_sold desc) as category_bestseller,
+  nth_value(title, 2) over(
+    partition by category order by copies_sold desc
+    range between
+      unbounded preceding and
+      unbounded following
+  ) as second_bestseller
+from book
+order by category asc, copies_sold desc;
+
+
+
+select
+  a.name as author_name,
+  b.title,
+  b.category,
+  b.copies_sold,
+  round(avg(b.copies_sold) over(partition by b.category), 2) as category_avg
+from book b
+inner join author a
+on b.author_id = a.id
+order by b.category asc, b.copies_sold desc;
+
+
+select
+  a.name as author_name,
+  a.country,
+  sum(b.copies_sold) as total_copies,
+  rank() over(order by sum(b.copies_sold) desc) as author_rank
+from book b
+inner join author a
+on b.author_id = a.id
+group by a.id, a.name, a.country
+order by author_rank
+limit 3;
+
+
+
+select
+  title,
+  case
+    when price < 30 then 'Budget'
+    when price <= 40 then 'Standard'
+    else 'Premium'
+  end as price_tier,
+  price,
+  copies_sold,
+  rank() over(
+    partition by case
+    when price < 30 then 'Budget'
+    when price <= 40 then 'Standard'
+    else 'Premium'
+    end
+    order by copies_sold desc
+  )
+  as tier_rank
+from book
+
+
+
+select
+  title,
+  sale_month,
+  copies_sold as current_sales, 
+  lag(copies_sold) 
+    over(partition by title order by sale_month) as prev_sales,
+  copies_sold - lag(copies_sold) 
+    over(partition by title order by sale_month) as sales_change,
+  round((copies_sold - lag(copies_sold) 
+    over(partition by title order by sale_month)) * 100.0 / lag(copies_sold) 
+    over(partition by title order by sale_month),1) 
+  as pct_change
+from sale
+order by title asc, sale_month asc
+
+
+
+SELECT
+  title,
+  price,
+  copies_sold,
+  round(
+    avg(copies_sold) OVER (
+      ORDER BY price 
+      RANGE BETWEEN 5 preceding AND 5 following
+    ),0) AS similar_price_avg,
+  count(*) over(
+     order by price
+     RANGE BETWEEN 5 preceding AND 5 following
+  ) as books_in_range
+FROM
+  book
+ORDER BY
+  price ASC,
+  title ASC
