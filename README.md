@@ -2,8 +2,8 @@
 
 ## Window Functions
 
-https://www.codecademy.com/resources/docs/sql/window-functions
-https://www.datacamp.com/cheat-sheet/sql-window-functions-cheat-sheet
+* https://www.codecademy.com/resources/docs/sql/window-functions
+* https://www.datacamp.com/cheat-sheet/sql-window-functions-cheat-sheet
 
 ### Ranking Functions
 
