@@ -1,5 +1,8 @@
 # SQL Exercises
 
+* https://roadmap.sh/courses/sql
+* https://course.roadmap.sh/sql/introduction/basics-of-databases
+
 ## Window Functions
 
 * https://www.codecademy.com/resources/docs/sql/window-functions
